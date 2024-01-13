@@ -8,7 +8,9 @@ d3.json(quakeUrl).then (function (data) {
 function createFeatures(quakeData) {
 
     
-    function onEachFeature(point,marker) {
+    function onEachFeature(point) {
+
+      let marker = L.circle()
         marker.bindPopup(`<h1>${point.coordinates}</h1>`);
       }
     
@@ -29,12 +31,10 @@ function createMap (quakes) {
     "Street Map": street
   };
 
-  // Create an overlay object to hold our overlay.
   let overlayMaps = {
     Earthquakes: quakes
   };
 
-  // Create our map, giving it the streetmap and earthquakes layers to display on load.
   let myMap = L.map("map", {
     center: [
       37.09, -95.71
@@ -43,9 +43,7 @@ function createMap (quakes) {
     layers: [street, quakes]
   });
 
-  // Create a layer control.
-  // Pass it our baseMaps and overlayMaps.
-  // Add the layer control to the map.
+
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
