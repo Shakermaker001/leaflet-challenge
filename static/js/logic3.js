@@ -10,10 +10,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   }).addTo(myMap);
 
 let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
-
-function chooseColor(coordinate) {
-    if (coordinate <= 10 && coordinate >=-10) return "green";
-    else if (coordinate > 10 && coordinate ) return "yellow";
+function chooseColor(cooridinate) {
+    if (coordinate < 10) return "green";
+    else if (coordinate < 30) return "yellow";
     else if (coordinate < 50) return "orange";
     else if (coordinate < 70) return "red";
     else if (coordinate < 90) return "purple";
@@ -23,10 +22,10 @@ function chooseColor(coordinate) {
 d3.json(url).then(function(geoJsonData) {
 
   var heatLayer = L.geoJSON(geoJsonData, {
-        pointToLayer: function (feature, point, coordinate) {
-          return L.circleMarker(coordinate, {
+        pointToLayer: function (feature, point, cooridinate) {
+          return L.circleMarker(cooridinate, {
             radius: feature.properties.mag * 5,
-            fillColor: chooseColor(point.coordinates[2]),
+            fillColor: L.chooseColor(point.cooridinate.altitude),
             color: '#000',
             weight: 3,
             opacity: 1,
